@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PanelController!{% endblock %}
+{% block nav %}
+    {% include 'admin/panel/nav.html.twig' %}
+{% endblock %}
+{% block body %}
+    <div class="flex-column p-4">
+        <h1>{{ page.name }}</h1>
+        <strong>Page title:</strong> {{ page.title }} <br>
+        <strong>Page description:</strong> {{ page.description }}<br>
+        <strong>Page creation date:</strong> {{ page.creationDate|date('d-m-Y') }}<br>
+        <strong>Page content:</strong> {{ page.content }}<br>
+    </div>
+{% endblock %}

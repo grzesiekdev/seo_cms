@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
-class PageController extends AbstractController
+class WebsiteController extends AbstractController
 {
     #[Route('/', name: 'homepage')]
     public function index(): Response

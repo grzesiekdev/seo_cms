@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PanelController!{% endblock %}
+{% block nav %}
+    {% include 'admin/panel/nav.html.twig' %}
+{% endblock %}
+{% block body %}
+    <div class="flex-column">
+        <h1>Manage pages</h1>
+        <ul>
+        {% for page in pages %}
+            <li>{{ page.name }} - <a href="/admin/pages/edit/{{ page.id }}">edit</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
