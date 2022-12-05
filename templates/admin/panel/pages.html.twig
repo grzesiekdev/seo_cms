@@ -10,11 +10,14 @@
         <a class="btn btn-secondary m-1" href="/admin/pages/new">New page</a>
         <ul class="list-unstyled mx-2 mt-3">
         {% for page in pages %}
-            <li class="w-100 p-2 border border-secondary rounded-1 my-3" style="background: #e0e0e0;">
+            <li class="w-100 p-2 border border-secondary rounded-1 my-3" style="background: #e3e3e3;">
                 <div class="row">
                     <div class="col-3">
                         {{ page.name }} -
                         {{ page.creationDate|date('d/m/Y h:m:sa') }}
+                        {% if page.WasEdited %}
+                            <i title="Was edited" class="fa-solid fa-pencil"></i>
+                        {% endif %}
                     </div>
                     <div class="col-9 text-end">
                         <a style="color:#303030;" href="/admin/pages/edit/{{ page.id }}" class="text-decoration-none mx-2">

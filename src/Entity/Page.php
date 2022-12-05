@@ -29,6 +29,9 @@ class Page
     #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $CreationDate = null;
 
+    #[ORM\Column]
+    private ?bool $WasEdited = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class Page
     public function setCreationDate(\DateTimeInterface $CreationDate): self
     {
         $this->CreationDate = $CreationDate;
+
+        return $this;
+    }
+
+    public function isWasEdited(): ?bool
+    {
+        return $this->WasEdited;
+    }
+
+    public function setWasEdited(bool $WasEdited): self
+    {
+        $this->WasEdited = $WasEdited;
 
         return $this;
     }

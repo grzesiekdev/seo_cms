@@ -70,12 +70,27 @@ class PageController extends AbstractController
     }
 
     #[Route('/admin/pages/edit/{id}', name: 'admin_panel_pages_edit')]
-    public function pages_edit(int $id): Response
+    public function pages_edit(Request $request, int $id): Response
     {
         $page = $this->pageRepository->findOneBy(['id' => $id]);
 
+        $form = $this->createForm(PageType::class, $page);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $page = $form->getData();
+            $page->setWasEdited(true);
+
+            $this->em->persist($page);
+            $this->em->flush();
+
+            return $this->redirectToRoute('admin_panel_pages');
+        }
+
+
         return $this->render('admin/panel/page_edit.html.twig', [
             'page' => $page,
+            'form' => $form->createView()
         ]);
     }
 }
