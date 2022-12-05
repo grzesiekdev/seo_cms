@@ -5,13 +5,30 @@
     {% include 'admin/panel/nav.html.twig' %}
 {% endblock %}
 {% block body %}
-    <div class="flex-column">
+    <div class="flex-column w-75 p-3">
         <h1>Manage pages</h1>
         <a class="btn btn-secondary m-1" href="/admin/pages/new">New page</a>
-        <ul>
+        <ul class="list-unstyled mx-2 mt-3">
         {% for page in pages %}
-            <li>{{ page.name }} - <a href="/admin/pages/edit/{{ page.id }}">edit</a>, <a style="color:crimson;" href="/admin/pages/delete/{{ page.id }}">delete</a> </li>
+            <li class="w-100 p-2 border border-secondary rounded-1 my-3" style="background: #e0e0e0;">
+                <div class="row">
+                    <div class="col-3">
+                        {{ page.name }} -
+                        {{ page.creationDate|date('d/m/Y h:m:sa') }}
+                    </div>
+                    <div class="col-9 text-end">
+                        <a style="color:#303030;" href="/admin/pages/edit/{{ page.id }}" class="text-decoration-none mx-2">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <a style="color:crimson;" href="/admin/pages/delete/{{ page.id }}" class="mx-2">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </li>
         {% endfor %}
         </ul>
+
     </div>
 {% endblock %}
