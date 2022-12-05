@@ -2,11 +2,16 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Page;
+use App\Form\PageType;
 use App\Repository\PageRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
 
 class PageController extends AbstractController
 {
@@ -25,6 +30,43 @@ class PageController extends AbstractController
         return $this->render('admin/panel/pages.html.twig', [
             'pages' => $pages,
         ]);
+    }
+
+    #[Route('/admin/pages/new', name: 'admin_panel_pages_new')]
+    public function pages_new(Request $request): Response
+    {
+        $page = new Page();
+        $form = $this->createForm(PageType::class, $page);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $page = $form->getData();
+
+            $current_date = date("d-m-Y h:i:s");
+            $date = new \DateTime($current_date);
+            $page->setCreationDate($date);
+
+            $this->em->persist($page);
+            $this->em->flush();
+
+            return $this->redirectToRoute('admin_panel_pages');
+        }
+
+        return $this->render('admin/panel/page_new.html.twig', [
+            'page' => $page,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/admin/pages/delete/{id}', name: 'admin_panel_pages_delete')]
+    public function pages_delete(int $id): Response
+    {
+        $page = $this->pageRepository->findOneBy(['id' => $id]);
+
+        $this->em->remove($page);
+        $this->em->flush();
+
+        return $this->redirectToRoute('admin_panel_pages');
     }
 
     #[Route('/admin/pages/edit/{id}', name: 'admin_panel_pages_edit')]

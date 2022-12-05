@@ -26,7 +26,7 @@ class Page
     #[ORM\Column(length: 5000, nullable: true)]
     private ?string $Content = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $CreationDate = null;
 
     public function getId(): ?int

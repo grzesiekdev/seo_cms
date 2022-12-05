@@ -11,6 +11,7 @@
     "webpack-cli": "^5.0.0"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^35.3.2",
     "@symfony/webpack-encore": "^4.1.2",
     "bootstrap": "^5.2.3",
     "core-js": "^3.26.1",
