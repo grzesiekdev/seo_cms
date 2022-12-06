@@ -5,8 +5,11 @@ namespace App\Entity;
 use App\Repository\PageRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PageRepository::class)]
+#[UniqueEntity('Slug')]
 class Page
 {
     #[ORM\Id]
@@ -32,7 +35,7 @@ class Page
     #[ORM\Column]
     private ?bool $WasEdited = false;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $Slug = null;
 
     public function getId(): ?int

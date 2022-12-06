@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\PageRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,5 +14,15 @@ class WebsiteController extends AbstractController
     public function index(): Response
     {
         return $this->render('index.html.twig');
+    }
+
+    #[Route('/{slug}', name: 'page')]
+    public function page(string $slug, PageRepository $pageRepository): Response
+    {
+        $page = $pageRepository->findOneBy(['Slug' => $slug]);
+
+        return $this->render('page.html.twig', [
+            'page' => $page,
+        ]);
     }
 }

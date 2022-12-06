@@ -35,7 +35,7 @@ class PageType extends AbstractType
                     'placeholder' => 'Slug',
                 ),
                 'required' => false,
-                'empty_data' => ''
+                'empty_data' => '',
             ])
             ->add('content', TextareaType::class, [
                 'attr' => array(

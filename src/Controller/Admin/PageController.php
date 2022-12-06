@@ -41,11 +41,7 @@ class PageController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
             $page = $form->getData();
-            if(empty($form['slug']->getData()))
-            {
-                $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $form['name']->getData())));
-                $page->setSlug($slug);
-            }
+            $this->slugify($form, $page);
 
             $current_date = date("d-m-Y h:i:s");
             $date = new \DateTime($current_date);
@@ -60,6 +56,7 @@ class PageController extends AbstractController
         return $this->render('admin/panel/page_new.html.twig', [
             'page' => $page,
             'form' => $form->createView(),
+            'errors' => $form->isSubmitted() && !$form->isValid()
         ]);
     }
 
@@ -84,6 +81,8 @@ class PageController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
             $page = $form->getData();
+            $this->slugify($form, $page);
+
             $page->setWasEdited(true);
 
             $this->em->persist($page);
@@ -95,7 +94,25 @@ class PageController extends AbstractController
 
         return $this->render('admin/panel/page_edit.html.twig', [
             'page' => $page,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'errors' => $form->isSubmitted() && !$form->isValid()
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param $page
+     * @return void
+     */
+    public function slugify(\Symfony\Component\Form\FormInterface $form, &$page): void
+    {
+        if (empty($form['slug']->getData())) {
+            $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $form['name']->getData())));
+            if ($this->pageRepository->findBy(['Slug' => $slug])) {
+                $page->setSlug($slug . '-' . uniqid());
+            } else {
+                $page->setSlug($slug);
+            }
+        }
     }
 }
