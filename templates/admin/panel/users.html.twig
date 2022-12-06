@@ -6,6 +6,11 @@
 {% endblock %}
 {% block body %}
     <div class="m-2">
-        <h1>Hello {{ user.getUsername }}!</h1>
+        <h1>List of users</h1>
+        <ul>
+            {% for user in users %}
+                <li>{{ user.getUsername }}</li>
+            {% endfor %}
+        </ul>
     </div>
 {% endblock %}
