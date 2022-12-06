@@ -41,6 +41,11 @@ class PageController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
             $page = $form->getData();
+            if(empty($form['slug']->getData()))
+            {
+                $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $form['name']->getData())));
+                $page->setSlug($slug);
+            }
 
             $current_date = date("d-m-Y h:i:s");
             $date = new \DateTime($current_date);

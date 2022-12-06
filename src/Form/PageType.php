@@ -30,6 +30,13 @@ class PageType extends AbstractType
                     'placeholder' => 'SEO-friendly description',
                 )
             ])
+            ->add('slug', TextType::class, [
+                'attr' => array(
+                    'placeholder' => 'Slug',
+                ),
+                'required' => false,
+                'empty_data' => ''
+            ])
             ->add('content', TextareaType::class, [
                 'attr' => array(
                     'placeholder' => 'Page content',

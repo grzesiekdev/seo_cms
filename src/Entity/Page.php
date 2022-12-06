@@ -32,6 +32,9 @@ class Page
     #[ORM\Column]
     private ?bool $WasEdited = false;
 
+    #[ORM\Column(length: 255)]
+    private ?string $Slug = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,18 @@ class Page
     public function setWasEdited(bool $WasEdited): self
     {
         $this->WasEdited = $WasEdited;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->Slug;
+    }
+
+    public function setSlug(string $Slug): self
+    {
+        $this->Slug = $Slug;
 
         return $this;
     }
