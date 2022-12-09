@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -37,6 +39,14 @@ class Page
 
     #[ORM\Column(length: 255, unique: true)]
     private ?string $Slug = null;
+
+    #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'relation')]
+    private Collection $menus;
+
+    public function __construct()
+    {
+        $this->menus = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -123,6 +133,33 @@ class Page
     public function setSlug(string $Slug): self
     {
         $this->Slug = $Slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Menu>
+     */
+    public function getMenus(): Collection
+    {
+        return $this->menus;
+    }
+
+    public function addMenu(Menu $menu): self
+    {
+        if (!$this->menus->contains($menu)) {
+            $this->menus->add($menu);
+            $menu->addRelation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenu(Menu $menu): self
+    {
+        if ($this->menus->removeElement($menu)) {
+            $menu->removeRelation($this);
+        }
 
         return $this;
     }

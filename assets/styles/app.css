@@ -24,3 +24,32 @@ form[name="registration_form"] label+ul {
     font-size: 90%;
 }
 
+li.dropdown:hover ul.dropdown-menu {
+    display: block;
+    left: 110px;
+    top: 30px;
+    background: #303030;
+    border: none;
+}
+
+ul.dropdown-menu > li {
+    padding: 15px;
+    text-align: center;
+}
+
+#cke_page_content {
+    width: 90vh;
+    max-width: 100vh
+}
+
+form input {
+    display: block;
+}
+
+.admin-column {
+    height: 1500px;
+}
+
+.nav.flex-column {
+    min-height: 100vh;
+}

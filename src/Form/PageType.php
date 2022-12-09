@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Page;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -37,12 +38,15 @@ class PageType extends AbstractType
                 'required' => false,
                 'empty_data' => '',
             ])
-            ->add('content', TextareaType::class, [
+            ->add('content', CKEditorType::class, [
                 'attr' => array(
                     'placeholder' => 'Page content',
-                    'rows' => '15',
-                    'cols' => '50',
-                )
+                ),
+                'config' => array(
+                    'uiColor' => '#ffffff',
+                    'resize_enabled' => false,
+                    'height' => '500px'
+                ),
             ])
         ;
     }

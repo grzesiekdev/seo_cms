@@ -34,4 +34,14 @@ class PanelController extends AbstractController
             'users' => $users,
         ]);
     }
+
+    #[Route('/admin/menu', name: 'admin_panel_menu')]
+    public function menu(PageRepository $pageRepository): Response
+    {
+        $pages = $pageRepository->findAll();
+
+        return $this->render('admin/panel/menu.html.twig', [
+            'pages' => $pages,
+        ]);
+    }
 }
