@@ -2,15 +2,25 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\MenuPages;
+use App\Form\AddToMenuType;
+use App\Repository\MenuPagesRepository;
 use App\Repository\PageRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PanelController extends AbstractController
 {
+    private EntityManagerInterface $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
 
     #[Route('/admin', name: 'admin_panel')]
     public function index(): Response
@@ -36,12 +46,32 @@ class PanelController extends AbstractController
     }
 
     #[Route('/admin/menu', name: 'admin_panel_menu')]
-    public function menu(PageRepository $pageRepository): Response
+    public function menu(Request $request): Response
     {
-        $pages = $pageRepository->findAll();
+        $form = $this->createForm(AddToMenuType::class, []);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $menuPages = $form->getData();
+
+            $i = 0;
+            foreach ($menuPages['Page'] as $page)
+            {
+                $i++;
+                $menu = new MenuPages();
+                $menu->setPageOrder($i);
+                $menu->setLabel($page->getName());
+                $this->em->persist($menu);
+            }
+
+            $this->em->flush();
+
+            return $this->redirectToRoute('admin_panel_menu');
+        }
 
         return $this->render('admin/panel/menu.html.twig', [
-            'pages' => $pages,
+            'form' => $form->createView(),
         ]);
     }
 }

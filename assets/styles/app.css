@@ -53,3 +53,32 @@ form input {
 .nav.flex-column {
     min-height: 100vh;
 }
+
+#add_to_menu_Page {
+    width: 100%;
+    overflow: hidden;
+
+}
+
+#add_to_menu_Page option::before {
+    content: "\2610";
+    width: 1.3em;
+    text-align: center;
+    display: inline-block;
+}
+
+#add_to_menu_Page option::before {
+    font-family: FontAwesome;
+    content: "\f096";
+    width: 1.3em;
+    display: inline-block;
+    margin-left: 2px;
+}
+
+#add_to_menu_Page option:checked::before {
+    content: "\f046";
+}
+
+#add_to_menu_Page option {
+    margin-bottom: 10px;
+}

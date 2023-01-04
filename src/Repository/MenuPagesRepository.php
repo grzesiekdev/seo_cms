@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Menu;
+use App\Entity\MenuPages;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Menu>
+ * @extends ServiceEntityRepository<MenuPages>
  *
- * @method Menu|null find($id, $lockMode = null, $lockVersion = null)
- * @method Menu|null findOneBy(array $criteria, array $orderBy = null)
- * @method Menu[]    findAll()
- * @method Menu[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method MenuPages|null find($id, $lockMode = null, $lockVersion = null)
+ * @method MenuPages|null findOneBy(array $criteria, array $orderBy = null)
+ * @method MenuPages[]    findAll()
+ * @method MenuPages[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MenuRepository extends ServiceEntityRepository
+class MenuPagesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Menu::class);
+        parent::__construct($registry, MenuPages::class);
     }
 
-    public function save(Menu $entity, bool $flush = false): void
+    public function save(MenuPages $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class MenuRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Menu $entity, bool $flush = false): void
+    public function remove(MenuPages $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class MenuRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Menu[] Returns an array of Menu objects
+//     * @return MenuPages[] Returns an array of MenuPages objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class MenuRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Menu
+//    public function findOneBySomeField($value): ?MenuPages
 //    {
 //        return $this->createQueryBuilder('m')
 //            ->andWhere('m.exampleField = :val')

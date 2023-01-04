@@ -40,13 +40,8 @@ class Page
     #[ORM\Column(length: 255, unique: true)]
     private ?string $Slug = null;
 
-    #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'relation')]
-    private Collection $menus;
-
-    public function __construct()
-    {
-        $this->menus = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'Page')]
+    private ?MenuPages $menuPages = null;
 
     public function getId(): ?int
     {
@@ -137,30 +132,16 @@ class Page
         return $this;
     }
 
-    /**
-     * @return Collection<int, Menu>
-     */
-    public function getMenus(): Collection
+    public function getMenuPages(): ?MenuPages
     {
-        return $this->menus;
+        return $this->menuPages;
     }
 
-    public function addMenu(Menu $menu): self
+    public function setMenuPages(?MenuPages $menuPages): self
     {
-        if (!$this->menus->contains($menu)) {
-            $this->menus->add($menu);
-            $menu->addRelation($this);
-        }
+        $this->menuPages = $menuPages;
 
         return $this;
     }
 
-    public function removeMenu(Menu $menu): self
-    {
-        if ($this->menus->removeElement($menu)) {
-            $menu->removeRelation($this);
-        }
-
-        return $this;
-    }
 }
