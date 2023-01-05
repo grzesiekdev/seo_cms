@@ -11,5 +11,14 @@
             {{ form_label(form.Page, "Select pages which you want to add to menu (ctrl + click for multiple selection)") }}
             {{ form_label(form.Submit) }}
         {{ form_end(form) }}
+        <h3 class="mt-5">Pages in menu:</h3>
+        <div class="card mt-1 w-25">
+            <ul class="list-group list-group-flush">
+                {% for page in pages_in_menu %}
+                    <li class="list-group-item">{{ page.Name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
+
 {% endblock %}

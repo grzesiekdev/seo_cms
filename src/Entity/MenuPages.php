@@ -24,6 +24,9 @@ class MenuPages
     #[ORM\OneToMany(mappedBy: 'menuPages', targetEntity: Page::class)]
     private Collection $Page;
 
+    #[ORM\Column]
+    private ?int $page_id = null;
+
     public function __construct()
     {
         $this->Page = new ArrayCollection();
@@ -84,6 +87,18 @@ class MenuPages
                 $page->setMenuPages(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPageId(): ?int
+    {
+        return $this->page_id;
+    }
+
+    public function setPageId(int $page_id): self
+    {
+        $this->page_id = $page_id;
 
         return $this;
     }

@@ -24,7 +24,7 @@ class AddToMenuType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $pages = $this->pageRepository->findAll();
+        $pages = $this->pageRepository->findBy(['menuPages' => null]);
 
         $builder
             ->add('Page', ChoiceType::class, [

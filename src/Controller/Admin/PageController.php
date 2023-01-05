@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Page;
 use App\Form\PageType;
+use App\Repository\MenuPagesRepository;
 use App\Repository\PageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -61,11 +62,12 @@ class PageController extends AbstractController
     }
 
     #[Route('/admin/pages/delete/{id}', name: 'admin_panel_pages_delete')]
-    public function pages_delete(int $id): Response
+    public function pages_delete(int $id, MenuPagesRepository $menuPagesRepository): Response
     {
         $page = $this->pageRepository->findOneBy(['id' => $id]);
-
+        $menuPage = $menuPagesRepository->findOneBy(['page_id' => $page->getId()]);
         $this->em->remove($page);
+        $this->em->remove($menuPage);
         $this->em->flush();
 
         return $this->redirectToRoute('admin_panel_pages');
