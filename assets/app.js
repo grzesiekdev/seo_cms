@@ -39,12 +39,10 @@ var adminNs =
                     e.preventDefault(); // Necessary. Allows us to drop.
                 }
                 e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+                this.classList.add('over');
                 return false;
             }
-            function handleDragEnter(e) {
-//console.log('drag enter: '+ e.target);
-                this.classList.add('over');
-            }
+
             function handleDragLeave(e) {
 //console.log('drag leave: '+ e.target);
                 this.classList.remove('over');  // this / e.target is previous target element.
@@ -89,7 +87,6 @@ var adminNs =
             var rows = document.querySelectorAll('div.sortable > .list-group li');
             [].forEach.call(rows, function(row) {
                 row.addEventListener('dragstart', handleDragStart, false);
-                row.addEventListener('dragenter', handleDragEnter, false);
                 row.addEventListener('dragover', handleDragOver, false);
                 row.addEventListener('dragleave', handleDragLeave, false);
                 row.addEventListener('drop', handleDrop, false);
