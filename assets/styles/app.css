@@ -82,3 +82,14 @@ form input {
 #add_to_menu_Page option {
     margin-bottom: 10px;
 }
+
+[draggable] {
+    user-select: none;
+    -webkit-user-drag: element;
+    cursor: move;
+}
+
+div.sortable li.over  {
+    border: 1px dashed red;
+}
+

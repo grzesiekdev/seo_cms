@@ -6,6 +6,7 @@ use App\Repository\MenuPagesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: MenuPagesRepository::class)]
 class MenuPages
@@ -18,9 +19,11 @@ class MenuPages
     #[ORM\Column(length: 255)]
     private ?string $Label = null;
 
+    #[Gedmo\SortablePosition]
     #[ORM\Column]
     private ?int $PageOrder = null;
 
+    #[Gedmo\SortableGroup]
     #[ORM\OneToMany(mappedBy: 'menuPages', targetEntity: Page::class)]
     private Collection $Page;
 

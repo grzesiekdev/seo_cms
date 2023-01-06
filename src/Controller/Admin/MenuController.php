@@ -32,13 +32,13 @@ class MenuController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             $menuPages = $form->getData();
-
+            $prevMenus = $menuPagesRepository->findAll();
             $i = 0;
             foreach ($menuPages['Page'] as $page)
             {
                 $i++;
                 $menu = new MenuPages();
-                $menu->setPageOrder($i);
+                $menu->setPageOrder(count($prevMenus)+$i);
                 $menu->setLabel($page->getName());
                 $menu->setPageId($page->getId());
                 $this->em->persist($menu);
@@ -60,6 +60,10 @@ class MenuController extends AbstractController
         }
         $pagesInMenu = $this->pageRepository->findBy(['id' => $menuPagesIds]);
 
+        usort($pagesInMenu, function ($first, $second) {
+            return $first->getMenuPages()->getPageOrder() > $second->getMenuPages()->getPageOrder();
+        });
+
         return $this->render('admin/panel/menu.html.twig', [
             'form' => $form->createView(),
             'pages_in_menu' => $pagesInMenu,
@@ -77,4 +81,30 @@ class MenuController extends AbstractController
 
         return $this->redirectToRoute('admin_panel_menu');
     }
+
+    #[Route('/admin/menu/sort/{id}/{position}', name: 'admin_panel_menu_sort')]
+    public function sortAction($id, $position, MenuPagesRepository $menuPagesRepository)
+    {
+        $menu = $menuPagesRepository->findOneBy(['id' => $id]);
+        $prevPosition = $menu->getPageOrder();
+
+        $replacedMenu = $menuPagesRepository->findOneBy(['PageOrder' => $position]);
+
+        $menu->setPageOrder($position);
+        if ($replacedMenu === null)
+        {
+            $firstMenu = $menuPagesRepository->findOneBy(['PageOrder' => 1]);
+            $firstMenu->setPageOrder(1);
+        }
+        else
+        {
+            $replacedMenu->setPageOrder($prevPosition);
+            $this->em->persist($replacedMenu);
+        }
+        $this->em->persist($menu);
+        $this->em->flush();
+
+        return $this->redirectToRoute('admin_panel_menu');
+    }
+
 }
