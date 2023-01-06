@@ -67,7 +67,10 @@ class PageController extends AbstractController
         $page = $this->pageRepository->findOneBy(['id' => $id]);
         $menuPage = $menuPagesRepository->findOneBy(['page_id' => $page->getId()]);
         $this->em->remove($page);
-        $this->em->remove($menuPage);
+        if($menuPage !== null)
+        {
+            $this->em->remove($menuPage);
+        }
         $this->em->flush();
 
         return $this->redirectToRoute('admin_panel_pages');
