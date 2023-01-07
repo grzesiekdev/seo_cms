@@ -1,4 +1,4 @@
-{% for page in menu %}
+{% for page in menu.getMenu %}
     <li class="nav-item ms-4">
         <a class="nav-link" href="/{{ page.slug }}">{{ page.label }}</a>
     </li>

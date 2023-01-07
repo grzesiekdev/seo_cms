@@ -12,30 +12,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class WebsiteController extends AbstractController
 {
     #[Route('/', name: 'homepage')]
-    public function index(MenuPagesRepository $menuPagesRepository): Response
+    public function index(): Response
     {
-        $menu = $menuPagesRepository->findAll();
-        usort($menu, function ($first, $second) {
-            return $first->getPageOrder() > $second->getPageOrder();
-        });
-
-        return $this->render('index.html.twig', [
-            'menu' => $menu,
-        ]);
+        return $this->render('index.html.twig');
     }
 
     #[Route('/{slug}', name: 'page')]
-    public function page(string $slug, PageRepository $pageRepository, MenuPagesRepository $menuPagesRepository): Response
+    public function page(string $slug, PageRepository $pageRepository): Response
     {
         $page = $pageRepository->findOneBy(['Slug' => $slug]);
-        $menu = $menuPagesRepository->findAll();
-        usort($menu, function ($first, $second) {
-            return $first->getPageOrder() > $second->getPageOrder();
-        });
 
         return $this->render('page.html.twig', [
             'page' => $page,
-            'menu' => $menu,
         ]);
     }
 }
