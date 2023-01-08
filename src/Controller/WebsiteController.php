@@ -12,9 +12,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class WebsiteController extends AbstractController
 {
     #[Route('/', name: 'homepage')]
-    public function index(): Response
+    public function index(PageRepository $pageRepository): Response
     {
-        return $this->render('index.html.twig');
+        $home = $pageRepository->findOneBy(['is_home' => true]);
+
+        return $this->render('page.html.twig', [
+            'page' => $home,
+        ]);
     }
 
     #[Route('/{slug}', name: 'page')]

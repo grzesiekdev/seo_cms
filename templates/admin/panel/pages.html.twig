@@ -18,6 +18,9 @@
                         {% if page.WasEdited %}
                             <i title="Was edited" class="fa-solid fa-pencil"></i>
                         {% endif %}
+                        {% if page.IsHome %}
+                            <i title="This page is home" class="fa-solid fa-house"></i>
+                        {% endif %}
                     </div>
                     <div class="col-9 text-end">
                         <a target="_blank" style="color:#303030;" href="/{{ page.slug }}" class="text-decoration-none mx-2">

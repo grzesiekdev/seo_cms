@@ -93,3 +93,7 @@ div.sortable li.over  {
     border: 1px dashed red;
 }
 
+input[type=checkbox] {
+    display: inline-block;
+    margin-left: 10px;
+}

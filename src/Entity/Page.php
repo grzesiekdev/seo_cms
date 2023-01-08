@@ -43,6 +43,9 @@ class Page
     #[ORM\ManyToOne(inversedBy: 'Page')]
     private ?MenuPages $menuPages = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $is_home = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -140,6 +143,18 @@ class Page
     public function setMenuPages(?MenuPages $menuPages): self
     {
         $this->menuPages = $menuPages;
+
+        return $this;
+    }
+
+    public function isIsHome(): ?bool
+    {
+        return $this->is_home;
+    }
+
+    public function setIsHome(?bool $is_home): self
+    {
+        $this->is_home = $is_home;
 
         return $this;
     }

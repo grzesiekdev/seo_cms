@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Page;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,6 +38,10 @@ class PageType extends AbstractType
                 ),
                 'required' => false,
                 'empty_data' => '',
+            ])
+            ->add('is_home', CheckboxType::class,[
+                'required' => false,
+                'label' => 'Is home?',
             ])
             ->add('content', CKEditorType::class, [
                 'attr' => array(
