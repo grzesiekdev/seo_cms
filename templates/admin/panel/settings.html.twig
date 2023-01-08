@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PanelController!{% endblock %}
+{% block nav %}
+    {% include '/admin/panel/inc/nav.html.twig' %}
+{% endblock %}
+{% block body %}
+    <div class="m-2">
+        <h1>Settings</h1>
+        <h3 class="mt-4">Edit content of robots.txt file</h3>
+        <small class="text-muted">Beware, wrong directives can lead to indexation problems with your site</small>
+        {{ form_start(form_robots) }}
+        <div class="error-box">
+        </div>
+        <div class="row">
+            <div class="col-6">{{ form_row(form_robots.content) }}</div>
+        </div>
+        <button type="submit" class="btn btn-success mt-2">Save robots.txt</button>
+        {% if errors %}
+            <div class="mt-3 text-danger">
+                There were some errors during submitting form:
+                {{ form_errors(form) }}
+            </div>
+        {% endif %}
+        {{ form_end(form_robots) }}
+    </div>
+{% endblock %}

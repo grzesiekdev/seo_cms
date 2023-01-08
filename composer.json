@@ -12,6 +12,7 @@
         "doctrine/orm": "^2.13",
         "friendsofsymfony/ckeditor-bundle": "^2.4",
         "gedmo/doctrine-extensions": "^3.10",
+        "symfony/apache-pack": "^1.0",
         "symfony/asset": "6.1.*",
         "symfony/console": "6.1.*",
         "symfony/dotenv": "6.1.*",

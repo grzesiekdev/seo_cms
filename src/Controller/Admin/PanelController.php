@@ -3,7 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Entity\MenuPages;
+use App\Entity\Page;
 use App\Form\AddToMenuType;
+use App\Form\RobotsType;
 use App\Repository\MenuPagesRepository;
 use App\Repository\PageRepository;
 use App\Repository\UserRepository;
@@ -44,6 +46,27 @@ class PanelController extends AbstractController
 
         return $this->render('admin/panel/users.html.twig', [
             'users' => $users,
+        ]);
+    }
+
+    #[Route('/admin/settings', name: 'admin_panel_settings')]
+    public function settings(Request $request): Response
+    {
+        $form = $this->createForm(RobotsType::class);
+        $form->handleRequest($request);
+        $file = fopen('../public/robots.txt', 'w+') or die('Unable to open file!');
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $robots = $form->getData();
+
+            fwrite($file, $robots['content']);
+        }
+
+        fclose($file);
+        return $this->render('admin/panel/settings.html.twig', [
+            'form_robots' => $form->createView(),
+            'errors' => $form->isSubmitted() && !$form->isValid()
         ]);
     }
 
