@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Admin;
+namespace App\Controller\Admin\Appearance;
 
 use App\Entity\MenuPages;
 use App\Form\AddToMenuType;

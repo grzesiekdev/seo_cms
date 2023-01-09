@@ -59,11 +59,10 @@ class PanelController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         {
             $robots = $form->getData();
-
             fwrite($file, $robots['content']);
         }
-
         fclose($file);
+
         return $this->render('admin/panel/settings.html.twig', [
             'form_robots' => $form->createView(),
             'errors' => $form->isSubmitted() && !$form->isValid()

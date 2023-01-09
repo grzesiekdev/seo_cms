@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PanelController!{% endblock %}
+{% block nav %}
+    {% include 'admin/panel/inc/nav.html.twig' %}
+{% endblock %}
+{% block body %}
+    <div class="flex-column w-75 p-3 admin-column">
+        <h1>Edit theme</h1>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-6">{{ form_row(form.logo) }}</div>
+        </div>
+        <button type="submit" class="btn btn-success mt-2">Save theme settings</button>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

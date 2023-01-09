@@ -4,6 +4,7 @@ twig:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
     globals:
         menu: '@App\Service\MenuGenerator'
+        settings: '@App\Service\GetSettings'
 
 when@test:
     twig:

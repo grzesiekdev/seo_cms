@@ -97,3 +97,7 @@ input[type=checkbox] {
     display: inline-block;
     margin-left: 10px;
 }
+
+.logo-main {
+    max-height: 50px;
+}
