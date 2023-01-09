@@ -8,6 +8,9 @@
     <div class="flex-column w-75 p-3 admin-column">
         <h1>Edit theme</h1>
         {{ form_start(form) }}
+        {% if settings.getSettings.logo %}
+        Your current logo is: <img class="logo-main border border-secondary p-1" src="/img/logo/{{ settings.getSettings.logo }}" alt="logo" />
+        {% endif %}
         <div class="row">
             <div class="col-6">{{ form_row(form.logo) }}</div>
         </div>

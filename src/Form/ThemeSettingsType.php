@@ -12,22 +12,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ThemeSettingsType extends AbstractType
 {
-    private EntityManagerInterface $em;
-    private SettingsRepository $settingsRepository;
-
-    public function __construct(EntityManagerInterface $em, SettingsRepository $settingsRepository)
-    {
-        $this->em = $em;
-        $this->settingsRepository = $settingsRepository;
-    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
-        $logo = $this->settingsRepository->findOneBy(['setting_name' => 'logo_path']);
-
         $builder
             ->add('logo', FileType::class, [
                 'label' => 'Set logo image',
+                'help' => '<br> <small>Beware - old logo will be deleted</small>',
+                'help_html' => true,
                 'mapped' => false,
             ])
         ;
