@@ -9,6 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class ThemeSettingsType extends AbstractType
 {
@@ -17,9 +18,16 @@ class ThemeSettingsType extends AbstractType
         $builder
             ->add('logo', FileType::class, [
                 'label' => 'Set logo image',
-                'help' => '<br> <small>Beware - old logo will be deleted</small>',
+                'help' => '<small>Beware - old logo will be deleted</small>',
                 'help_html' => true,
                 'mapped' => false,
+                'required' => false,
+                'attr' => [
+                    'accept' => '.png,.jpg,.jpeg'
+                ],
+                'constraints' => [
+                    new Image()
+                ]
             ])
         ;
     }

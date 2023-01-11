@@ -22,6 +22,12 @@
     </div>
 </div>
 <div class="row mt-3">
+    {{ form_label(form.robots_settings) }}
+    <div class="col-6">
+        {{ form_widget(form.robots_settings) }}
+    </div>
+</div>
+<div class="row mt-3">
     <div class="col-6">{{ form_row(form.content) |raw }}</div>
 </div>
 <button type="submit" class="btn btn-success mt-4">Save page</button>

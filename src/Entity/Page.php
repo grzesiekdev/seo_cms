@@ -46,6 +46,9 @@ class Page
     #[ORM\Column(nullable: true)]
     private ?bool $is_home = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $robots_settings = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -155,6 +158,18 @@ class Page
     public function setIsHome(?bool $is_home): self
     {
         $this->is_home = $is_home;
+
+        return $this;
+    }
+
+    public function getRobotsSettings(): ?string
+    {
+        return $this->robots_settings;
+    }
+
+    public function setRobotsSettings(?string $robots_settings): self
+    {
+        $this->robots_settings = $robots_settings;
 
         return $this;
     }

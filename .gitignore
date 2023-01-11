@@ -58,6 +58,8 @@
 /node_modules/
 /public/build/
 /public/img/
+/public/robots.txt
+
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###

@@ -37,19 +37,24 @@ class ThemeController extends AbstractController
         if ($form->isSubmitted() && $form->isSubmitted())
         {
             $directory = '../public/img/logo/';
-
-            if ($logo_setting !== null)
-            {
-                unlink($directory . $logo_setting->getSettingValue());
-            }
-
             $file = $form['logo']->getData();
-            $extension = $file->guessExtension();
-            $newFileName = uniqid() . '.' . $extension;
-            $file->move($directory, $newFileName);
+            if ($file != '')
+            {
+                if ($logo_setting !== null)
+                {
+                    if (file_exists($directory . $logo_setting->getSettingValue()))
+                    {
+                        unlink($directory . $logo_setting->getSettingValue());
+                    }
+                }
 
-            $logo_setting->setSettingValue($newFileName);
-            $this->em->persist($logo_setting);
+                $extension = $file->guessExtension();
+                $newFileName = uniqid() . '.' . $extension;
+                $file->move($directory, $newFileName);
+
+                $logo_setting->setSettingValue($newFileName);
+                $this->em->persist($logo_setting);
+            }
         }
         $this->em->flush();
 
