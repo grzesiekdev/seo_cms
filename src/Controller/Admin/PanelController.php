@@ -9,7 +9,9 @@ use App\Form\RobotsType;
 use App\Repository\MenuPagesRepository;
 use App\Repository\PageRepository;
 use App\Repository\UserRepository;
+use App\Service\SitemapGenerator;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,23 +52,30 @@ class PanelController extends AbstractController
     }
 
     #[Route('/admin/settings', name: 'admin_panel_settings')]
-    public function settings(Request $request): Response
+    public function settings(Request $request, SitemapGenerator $sitemapGenerator): Response
     {
-        $form = $this->createForm(RobotsType::class);
-        $form->handleRequest($request);
-        $file = fopen('../public/robots.txt', 'w+') or die('Unable to open file!');
+        $robotsForm = $this->createForm(RobotsType::class);
+        $robotsForm->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
+        if ($robotsForm->isSubmitted() && $robotsForm->isValid())
         {
-            $robots = $form->getData();
-            fwrite($file, $robots['content']);
+            $robotsFile = fopen('../public/robots.txt', 'w+') or die('Unable to open file!');
+            $robots = $robotsForm->getData();
+            fwrite($robotsFile, $robots['content']);
+            fclose($robotsFile);
         }
-        fclose($file);
 
         return $this->render('admin/panel/settings.html.twig', [
-            'form_robots' => $form->createView(),
-            'errors' => $form->isSubmitted() && !$form->isValid()
+            'form_robots' => $robotsForm->createView(),
+            'errors' => $robotsForm->isSubmitted() && !$robotsForm->isValid(),
         ]);
     }
 
+    #[Route('/admin/settings/generateSitemap', name: 'admin_panel_settings_sitemap')]
+    public function generateSitemap(SitemapGenerator $sitemapGenerator): Response
+    {
+        $sitemapGenerator->generateSitemap();
+
+        return $this->redirectToRoute('admin_panel_settings');
+    }
 }
