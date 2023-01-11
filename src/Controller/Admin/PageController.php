@@ -43,10 +43,10 @@ class PageController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $page = $form->getData();
             $this->slugify($form, $page);
-
             $current_date = date("d-m-Y h:i:s");
             $date = new \DateTime($current_date);
             $page->setCreationDate($date);
+
             $this->check_if_home($form, $page);
             $this->em->persist($page);
             $this->em->flush();
@@ -128,7 +128,7 @@ class PageController extends AbstractController
      */
     public function check_if_home(\Symfony\Component\Form\FormInterface $form, &$page): void
     {
-        if($form->get('is_home'))
+        if($form->get('is_home')->getData())
         {
             $previous_home = $this->pageRepository->findOneBy(['is_home' => true]);
             if ($previous_home)
