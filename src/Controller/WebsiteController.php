@@ -21,7 +21,7 @@ class WebsiteController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}', name: 'page')]
+    #[Route('/{slug}/', name: 'page', requirements: ['slug' => '.+'])]
     public function page(string $slug, PageRepository $pageRepository): Response
     {
         $page = $pageRepository->findOneBy(['Slug' => $slug]);

@@ -49,6 +49,9 @@ class Page
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $robots_settings = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $parent_id = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -170,6 +173,18 @@ class Page
     public function setRobotsSettings(?string $robots_settings): self
     {
         $this->robots_settings = $robots_settings;
+
+        return $this;
+    }
+
+    public function getParentId(): ?int
+    {
+        return $this->parent_id;
+    }
+
+    public function setParentId(?int $parent_id): self
+    {
+        $this->parent_id = $parent_id;
 
         return $this;
     }

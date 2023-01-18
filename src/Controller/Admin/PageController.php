@@ -16,12 +16,14 @@ use Symfony\Component\Validator\Constraints\Date;
 
 class PageController extends AbstractController
 {
-    private $em;
-    private $pageRepository;
-    public function __construct(EntityManagerInterface $em, PageRepository $pageRepository)
+    private EntityManagerInterface $em;
+    private PageRepository $pageRepository;
+    private MenuPagesRepository $menuPagesRepository;
+    public function __construct(EntityManagerInterface $em, PageRepository $pageRepository, MenuPagesRepository $menuPagesRepository)
     {
         $this->em = $em;
         $this->pageRepository = $pageRepository;
+        $this->menuPagesRepository = $menuPagesRepository;
     }
 
     #[Route('/admin/pages', name: 'admin_panel_pages')]
@@ -48,6 +50,8 @@ class PageController extends AbstractController
             $page->setCreationDate($date);
 
             $this->check_if_home($form, $page);
+
+            $page->setParentId($form->get('parent_id')->getData()->getId());
             $this->em->persist($page);
             $this->em->flush();
 
@@ -90,6 +94,7 @@ class PageController extends AbstractController
 
             $page->setWasEdited(true);
             $this->check_if_home($form, $page);
+
             $this->em->persist($page);
             $this->em->flush();
 
@@ -111,13 +116,22 @@ class PageController extends AbstractController
      */
     public function slugify(\Symfony\Component\Form\FormInterface $form, &$page): void
     {
-        if (empty($form['slug']->getData())) {
+        if (empty($form['slug']->getData()) || !empty($form['parent_id'])) {
             $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $form['name']->getData())));
-            if ($this->pageRepository->findBy(['Slug' => $slug])) {
-                $page->setSlug($slug . '-' . uniqid());
-            } else {
-                $page->setSlug($slug);
+            if (!empty($form['parent_id']))
+            {
+                $parent = $this->pageRepository->findOneBy(['id' => $form->get('parent_id')->getData()]);
+                $parent_slug = $parent->getSlug();
+                $slug = $parent_slug . '/' . $slug;
             }
+            if ($this->pageRepository->findBy(['Slug' => $slug])) {
+                $slug .= '-' . uniqid();
+            }
+            $menu = $this->menuPagesRepository->findOneBy(['page_id' => $page->getId()]);
+            $menu->setSlug($slug);
+            $this->menuPagesRepository->save($menu, true);
+
+            $page->setSlug($slug);
         }
     }
 
