@@ -1,9 +1,12 @@
 <div class="d-flex">
     <ul class="nav flex-column navbar-dark bg-dark p-3 col-xl-1">
-        <li class="nav-item">
+        <li class="nav-item text-center">
             <a href="/" style="color:#53aa78" title="See site"><i class="fa-solid fa-globe"></i></a>
-            <a href="/logout" style="color:#53aa78" class="m-2" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></a>
-            <span class="nav-link text-secondary mt-5">SEO CMS</span>
+            <a href="/sitemap.xml" target="_blank" style="color:#53aa78" class="m-2" title="Logout"><i class="fa-solid fa-sitemap"></i></a>
+            <a href="/logout" style="color:#53aa78" class="" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+        </li>
+        <li>
+            <span class="nav-link text-secondary mt-5 text-left">SEO CMS</span>
         </li>
         <li class="nav-item">
             <a class="nav-link text-secondary pt-5" href="/admin">Home</a>
@@ -25,7 +28,9 @@
                 </li>
             </ul>
         </li>
+        {% if app.user.getRoles[0] == 'ROLE_ADMIN' %}
         <li class="nav-item">
             <a class="nav-link text-secondary pt-5" href="/admin/users">Users</a>
         </li>
+        {% endif %}
     </ul>
