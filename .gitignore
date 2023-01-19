@@ -59,6 +59,7 @@
 /public/build/
 /public/img/
 /public/robots.txt
+/public/sitemap.xml
 
 npm-debug.log
 yarn-error.log

@@ -41,7 +41,12 @@ class MenuController extends AbstractController
                 $menu->setPageOrder(count($prevMenus)+$i);
                 $menu->setLabel($page->getName());
                 $menu->setPageId($page->getId());
-                $menu->setSlug($page->getSlug());
+                $parent = $this->pageRepository->findOneBy(['id' => $page->getParentId()]);
+                if ($parent)
+                {
+                    $whole_address = $parent->getSlug() . '/' . $page->getSlug();
+                    $menu->setSlug($whole_address);
+                }
                 $this->em->persist($menu);
 
                 $page->setMenuPages($menu);
