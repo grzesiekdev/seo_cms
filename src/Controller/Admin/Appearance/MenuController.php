@@ -47,6 +47,10 @@ class MenuController extends AbstractController
                     $whole_address = $parent->getSlug() . '/' . $page->getSlug();
                     $menu->setSlug($whole_address);
                 }
+                else
+                {
+                    $menu->setSlug($page->getSlug());
+                }
                 $this->em->persist($menu);
 
                 $page->setMenuPages($menu);

@@ -142,7 +142,6 @@ class PageController extends AbstractController
                 }
                 else
                 {
-                    dd('test');
                     $menu->setSlug($slug);
                 }
                 $this->menuPagesRepository->save($menu, true);
