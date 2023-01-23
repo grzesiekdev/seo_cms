@@ -43,6 +43,7 @@ class WebsiteController extends AbstractController
 
         return $this->render('page.html.twig', [
             'page' => $page,
+            'parent' => $parent,
         ]);
     }
 }

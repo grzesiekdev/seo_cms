@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
             <url>
-            <loc>127.0.0.1:8000/about-us/contact</loc>
+            <loc>127.0.0.1:8000/contact</loc>
             <lastmod>2023-01-06</lastmod>
             </url>
             
             <url>
-            <loc>127.0.0.1:8000/about-us</loc>
+            <loc>127.0.0.1:8000/about-us-63c93a9d75854</loc>
             <lastmod>2023-01-06</lastmod>
             </url>
             
@@ -16,13 +16,13 @@
             </url>
             
             <url>
-            <loc>127.0.0.1:8000/home</loc>
+            <loc>127.0.0.1:8000/home-63c936e6db7bc</loc>
             <lastmod>2023-01-08</lastmod>
             </url>
             
             <url>
-            <loc>127.0.0.1:8000/offer/henlo-cms-63c84f18b4acf</loc>
-            <lastmod>2023-01-11</lastmod>
+            <loc>127.0.0.1:8000/nowa-testowa-stronka</loc>
+            <lastmod>2023-01-23</lastmod>
             </url>
             
         </urlset>

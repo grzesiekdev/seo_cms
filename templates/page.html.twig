@@ -10,6 +10,7 @@
 {% endblock %}
 {% block body %}
     <div>
+        {% include '/inc/breadcrumbs.html.twig' %}
         <h1 class="p-3">{{ page.name }}</h1>
         <div class="m-3">
             {{ page.content|raw }}

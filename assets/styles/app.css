@@ -101,3 +101,12 @@ input[type=checkbox] {
 .logo-main {
     max-height: 50px;
 }
+
+.breadcrumb {
+    padding: 20px;
+}
+
+.breadcrumb li:last-child a {
+    color: #303030;
+    text-decoration: none;
+}
