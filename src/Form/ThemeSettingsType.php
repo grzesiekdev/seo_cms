@@ -3,8 +3,6 @@
 namespace App\Form;
 
 use App\Entity\Settings;
-use App\Repository\SettingsRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,11 +21,11 @@ class ThemeSettingsType extends AbstractType
                 'mapped' => false,
                 'required' => false,
                 'attr' => [
-                    'accept' => '.png,.jpg,.jpeg'
+                    'accept' => '.png,.jpg,.jpeg',
                 ],
                 'constraints' => [
-                    new Image()
-                ]
+                    new Image(),
+                ],
             ])
         ;
     }

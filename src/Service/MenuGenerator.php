@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-
 use App\Repository\MenuPagesRepository;
 
 class MenuGenerator
@@ -13,6 +12,7 @@ class MenuGenerator
     {
         $this->menuPagesRepository = $menuPagesRepository;
     }
+
     public function getMenu(): array
     {
         $menu = $this->menuPagesRepository->findAll();

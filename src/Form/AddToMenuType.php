@@ -2,15 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Menu;
-use App\Entity\MenuPages;
 use App\Entity\Page;
 use App\Repository\PageRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AddToMenuType extends AbstractType
@@ -30,12 +27,12 @@ class AddToMenuType extends AbstractType
             ->add('Page', ChoiceType::class, [
                 'choices' => $pages,
                 'choice_label' => function (?Page $page) {
-                    return $page ? $page->getId() . ' ' . $page->getName() . ' - ' . $_SERVER['HTTP_HOST'] . '/' . $page->getSlug() . ' | ' . $page->getCreationDate()->format('d-m-Y h:m:s') : '';
+                    return $page ? $page->getId().' '.$page->getName().' - '.$_SERVER['HTTP_HOST'].'/'.$page->getSlug().' | '.$page->getCreationDate()->format('d-m-Y h:m:s') : '';
                 },
                 'label' => false,
                 'attr' => [
                     // due to hidden overflow and margins in select, I'm adding 2 to size, for showing all the options
-                    'size' => count($pages)+2,
+                    'size' => count($pages) + 2,
                 ],
                 'multiple' => true,
             ])
@@ -43,7 +40,7 @@ class AddToMenuType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-success mt-2',
                 ],
-                'label' => 'Add pages to menu'
+                'label' => 'Add pages to menu',
             ])
         ;
     }

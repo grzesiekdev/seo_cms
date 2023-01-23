@@ -2,18 +2,12 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\MenuPages;
-use App\Entity\Page;
-use App\Form\AddToMenuType;
 use App\Form\RobotsType;
-use App\Repository\MenuPagesRepository;
 use App\Repository\PageRepository;
-use App\Repository\UserRepository;
 use App\Service\SitemapGenerator;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
@@ -36,7 +30,7 @@ class PanelController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        //* @var \App\Entity\User $user */
+        // * @var \App\Entity\User $user */
         $user = $this->getUser();
 
         return $this->render('admin/panel/index.html.twig', [
@@ -50,9 +44,8 @@ class PanelController extends AbstractController
         $robotsForm = $this->createForm(RobotsType::class);
         $robotsForm->handleRequest($request);
 
-        if ($robotsForm->isSubmitted() && $robotsForm->isValid())
-        {
-            $robotsFile = fopen('../public/robots.txt', 'w+') or die('Unable to open file!');
+        if ($robotsForm->isSubmitted() && $robotsForm->isValid()) {
+            $robotsFile = fopen('../public/robots.txt', 'w+') or exit('Unable to open file!');
             $robots = $robotsForm->getData();
             fwrite($robotsFile, $robots['content']);
             fclose($robotsFile);

@@ -8,11 +8,9 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PageType extends AbstractType
 {
@@ -22,43 +20,42 @@ class PageType extends AbstractType
     {
         $this->pageRepository = $pageRepository;
     }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $pages = $this->pageRepository->findAll();
         $page_ids = [];
 
-        foreach ($pages as $page)
-        {
-            if ($page !== $options['data'])
-            {
+        foreach ($pages as $page) {
+            if ($page !== $options['data']) {
                 $page_ids[] = $page->getId();
             }
         }
 
         $builder
             ->add('title', TextType::class, [
-                'attr' => array(
+                'attr' => [
                     'placeholder' => 'SEO-friendly title',
-                )
+                ],
             ])
             ->add('name', TextType::class, [
-                'attr' => array(
+                'attr' => [
                     'placeholder' => 'Name',
-                )
+                ],
             ])
             ->add('description', TextType::class, [
-                'attr' => array(
+                'attr' => [
                     'placeholder' => 'SEO-friendly description',
-                )
+                ],
             ])
             ->add('slug', TextType::class, [
-                'attr' => array(
+                'attr' => [
                     'placeholder' => 'Slug',
-                ),
+                ],
                 'required' => false,
                 'empty_data' => '',
             ])
-            ->add('is_home', CheckboxType::class,[
+            ->add('is_home', CheckboxType::class, [
                 'required' => false,
                 'label' => 'Is home?',
             ])
@@ -76,25 +73,24 @@ class PageType extends AbstractType
                 ],
                 'choice_label' => function (?int $id) use ($options) {
                     $page = $this->pageRepository->findOneBy(['id' => $id]);
-                    if ($page !== $options['data'])
-                    {
-                        return $page ? $page->getName() . ' - ' . $_SERVER['HTTP_HOST'] . '/' . $page->getSlug() : '';
+                    if ($page !== $options['data']) {
+                        return $page ? $page->getName().' - '.$_SERVER['HTTP_HOST'].'/'.$page->getSlug() : '';
                     }
                 },
                 'multiple' => false,
                 'label' => 'Parent page',
                 'placeholder' => 'None',
-                'required' => false
+                'required' => false,
             ])
             ->add('content', CKEditorType::class, [
-                'attr' => array(
+                'attr' => [
                     'placeholder' => 'Page content',
-                ),
-                'config' => array(
+                ],
+                'config' => [
                     'uiColor' => '#ffffff',
                     'resize_enabled' => false,
-                    'height' => '500px'
-                ),
+                    'height' => '500px',
+                ],
             ])
         ;
     }

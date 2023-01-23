@@ -29,26 +29,21 @@ class MenuController extends AbstractController
         $form = $this->createForm(AddToMenuType::class, []);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $menuPages = $form->getData();
             $prevMenus = $menuPagesRepository->findAll();
             $i = 0;
-            foreach ($menuPages['Page'] as $page)
-            {
-                $i++;
+            foreach ($menuPages['Page'] as $page) {
+                ++$i;
                 $menu = new MenuPages();
-                $menu->setPageOrder(count($prevMenus)+$i);
+                $menu->setPageOrder(count($prevMenus) + $i);
                 $menu->setLabel($page->getName());
                 $menu->setPageId($page->getId());
                 $parent = $this->pageRepository->findOneBy(['id' => $page->getParentId()]);
-                if ($parent)
-                {
-                    $whole_address = $parent->getSlug() . '/' . $page->getSlug();
+                if ($parent) {
+                    $whole_address = $parent->getSlug().'/'.$page->getSlug();
                     $menu->setSlug($whole_address);
-                }
-                else
-                {
+                } else {
                     $menu->setSlug($page->getSlug());
                 }
                 $this->em->persist($menu);
@@ -59,13 +54,11 @@ class MenuController extends AbstractController
 
             $this->em->flush();
 
-
             return $this->redirectToRoute('admin_panel_menu');
         }
         $menuPages = $menuPagesRepository->findAll();
-        $menuPagesIds = array();
-        foreach ($menuPages as $menuPage)
-        {
+        $menuPagesIds = [];
+        foreach ($menuPages as $menuPage) {
             $menuPagesIds[] = $menuPage->getPageId();
         }
         $pagesInMenu = $this->pageRepository->findBy(['id' => $menuPagesIds]);
@@ -101,13 +94,10 @@ class MenuController extends AbstractController
         $replacedMenu = $menuPagesRepository->findOneBy(['PageOrder' => $position]);
 
         $menu->setPageOrder($position);
-        if ($replacedMenu === null)
-        {
+        if (null === $replacedMenu) {
             $firstMenu = $menuPagesRepository->findOneBy(['PageOrder' => 1]);
             $firstMenu->setPageOrder(1);
-        }
-        else
-        {
+        } else {
             $replacedMenu->setPageOrder($prevPosition);
             $this->em->persist($replacedMenu);
         }
@@ -116,5 +106,4 @@ class MenuController extends AbstractController
 
         return $this->redirectToRoute('admin_panel_menu');
     }
-
 }

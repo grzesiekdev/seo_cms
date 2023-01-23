@@ -30,7 +30,7 @@ class RegistrationFormType extends AbstractType
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
-                'first_options'  => ['label' => 'Password'],
+                'first_options' => ['label' => 'Password'],
                 'second_options' => ['label' => 'Confirm Password'],
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller

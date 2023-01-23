@@ -2,13 +2,10 @@
 
 namespace App\Controller;
 
-use App\Repository\MenuPagesRepository;
 use App\Repository\PageRepository;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Requirement;
 
 class WebsiteController extends AbstractController
 {
@@ -21,12 +18,12 @@ class WebsiteController extends AbstractController
             'page' => $home,
         ]);
     }
+
     #[Route('/{slug}/', name: 'page')]
     public function page(string $slug, PageRepository $pageRepository): Response
     {
         $page = $pageRepository->findOneBy(['Slug' => $slug]);
-        if (!$page)
-        {
+        if (!$page) {
             throw $this->createNotFoundException('This page doesn\'t exists!');
         }
 
@@ -34,13 +31,13 @@ class WebsiteController extends AbstractController
             'page' => $page,
         ]);
     }
+
     #[Route('/{parent_slug}/{slug}/', name: 'page_parent')]
     public function pageParent(string $parent_slug, string $slug, PageRepository $pageRepository): Response
     {
         $page = $pageRepository->findOneBy(['Slug' => $slug]);
         $parent = $pageRepository->findOneBy(['Slug' => $parent_slug]);
-        if (!$parent || !$page)
-        {
+        if (!$parent || !$page) {
             throw $this->createNotFoundException('This page doesn\'t exists!');
         }
 

@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-
 use App\Repository\SettingsRepository;
 
 class GetSettings
@@ -13,9 +12,11 @@ class GetSettings
     {
         $this->settingsRepository = $settingsRepository;
     }
+
     public function getSettings(): array
     {
         $logo = $this->settingsRepository->findOneBy(['setting_name' => 'logo_path']);
+
         return [
             'logo' => $logo->getSettingValue(),
         ];

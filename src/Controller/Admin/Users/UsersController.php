@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin\Users;
 
-use App\Repository\PageRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,7 +34,7 @@ class UsersController extends AbstractController
     public function user_delete(UserRepository $userRepository, int $id): Response
     {
         $user = $userRepository->findOneBy(['id' => $id]);
-        if ($user !== $this->security->getUser() and $user->getRoles()[0] != 'ROLE_ADMIN') {
+        if ($user !== $this->security->getUser() and 'ROLE_ADMIN' != $user->getRoles()[0]) {
             $this->em->remove($user);
             $this->em->flush();
         }

@@ -16,10 +16,10 @@ class RobotsType extends AbstractType
                 'attr' => [
                     'rows' => 10,
                     'cols' => 50,
-                    'class' => 'mt-3'
+                    'class' => 'mt-3',
                 ],
                 'data' => file_get_contents('../public/robots.txt'),
-                'label' => false
+                'label' => false,
             ])
         ;
     }

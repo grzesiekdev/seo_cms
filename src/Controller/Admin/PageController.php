@@ -7,18 +7,17 @@ use App\Form\PageType;
 use App\Repository\MenuPagesRepository;
 use App\Repository\PageRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Date;
 
 class PageController extends AbstractController
 {
     private EntityManagerInterface $em;
     private PageRepository $pageRepository;
     private MenuPagesRepository $menuPagesRepository;
+
     public function __construct(EntityManagerInterface $em, PageRepository $pageRepository, MenuPagesRepository $menuPagesRepository)
     {
         $this->em = $em;
@@ -30,6 +29,7 @@ class PageController extends AbstractController
     public function pages(): Response
     {
         $pages = $this->pageRepository->findAll();
+
         return $this->render('admin/panel/pages.html.twig', [
             'pages' => $pages,
         ]);
@@ -42,10 +42,10 @@ class PageController extends AbstractController
         $form = $this->createForm(PageType::class, $page);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $page = $form->getData();
             $this->slugify($form, $page);
-            $current_date = date("d-m-Y h:i:s");
+            $current_date = date('d-m-Y h:i:s');
             $date = new \DateTime($current_date);
             $page->setCreationDate($date);
             $this->check_if_home($form, $page);
@@ -60,7 +60,7 @@ class PageController extends AbstractController
             'page' => $page,
             'form' => $form->createView(),
             'errors' => $form->isSubmitted() && !$form->isValid(),
-            'parent_slug' => null
+            'parent_slug' => null,
         ]);
     }
 
@@ -70,8 +70,7 @@ class PageController extends AbstractController
         $page = $this->pageRepository->findOneBy(['id' => $id]);
         $menuPage = $menuPagesRepository->findOneBy(['page_id' => $page->getId()]);
         $this->em->remove($page);
-        if($menuPage !== null)
-        {
+        if (null !== $menuPage) {
             $this->em->remove($menuPage);
         }
         $this->em->flush();
@@ -87,7 +86,7 @@ class PageController extends AbstractController
         $form = $this->createForm(PageType::class, $page);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $page = $form->getData();
             $this->slugify($form, $page);
 
@@ -102,10 +101,10 @@ class PageController extends AbstractController
 
         $parent = $this->pageRepository->findOneBy(['id' => $page->getParentId()]);
         $parent_slug = '';
-        if ($parent)
-        {
+        if ($parent) {
             $parent_slug = $parent->getSlug();
         }
+
         return $this->render('admin/panel/page_edit.html.twig', [
             'page' => $page,
             'form' => $form->createView(),
@@ -114,34 +113,24 @@ class PageController extends AbstractController
         ]);
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param $page
-     * @return void
-     */
     public function slugify(\Symfony\Component\Form\FormInterface $form, &$page): void
     {
         $parent_slug = '';
         if (empty($form['slug']->getData()) || !empty($form['parent_id'])) {
             $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $form['name']->getData())));
-            if (!empty($form['parent_id'] && $form['parent_id']->getData() != null))
-            {
+            if (!empty($form['parent_id'] && null != $form['parent_id']->getData())) {
                 $parent = $this->pageRepository->findOneBy(['id' => $form->get('parent_id')->getData()]);
                 $parent_slug = $parent->getSlug();
             }
             if ($this->pageRepository->findBy(['Slug' => $slug])) {
-                $slug .= '-' . uniqid();
+                $slug .= '-'.uniqid();
             }
             $menu = $this->menuPagesRepository->findOneBy(['page_id' => $page->getId()]);
-            if ($menu)
-            {
-                if ($parent_slug != '')
-                {
-                    $whole_address = $parent_slug . '/' . $slug;
+            if ($menu) {
+                if ('' != $parent_slug) {
+                    $whole_address = $parent_slug.'/'.$slug;
                     $menu->setSlug($whole_address);
-                }
-                else
-                {
+                } else {
                     $menu->setSlug($slug);
                 }
                 $this->menuPagesRepository->save($menu, true);
@@ -150,18 +139,11 @@ class PageController extends AbstractController
         }
     }
 
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param $page
-     * @return void
-     */
     public function check_if_home(\Symfony\Component\Form\FormInterface $form, &$page): void
     {
-        if($form->get('is_home')->getData())
-        {
+        if ($form->get('is_home')->getData()) {
             $previous_home = $this->pageRepository->findOneBy(['is_home' => true]);
-            if ($previous_home)
-            {
+            if ($previous_home) {
                 $previous_home->setIsHome(false);
                 $page->setIsHome(true);
             }
