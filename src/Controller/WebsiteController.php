@@ -23,7 +23,7 @@ class WebsiteController extends AbstractController
     public function page(string $slug, PageRepository $pageRepository): Response
     {
         $page = $pageRepository->findOneBy(['Slug' => $slug]);
-        if (!$page) {
+        if (!$page || null !== $page->getParentId()) {
             throw $this->createNotFoundException('This page doesn\'t exists!');
         }
 
