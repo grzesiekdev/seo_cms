@@ -27,7 +27,7 @@ class AddToMenuType extends AbstractType
             ->add('Page', ChoiceType::class, [
                 'choices' => $pages,
                 'choice_label' => function (?Page $page) {
-                    return $page ? $page->getId().' '.$page->getName().' - '.$_SERVER['HTTP_HOST'].'/'.$page->getSlug().' | '.$page->getCreationDate()->format('d-m-Y h:m:s') : '';
+                    return $page ? $page->getId().' '.$page->getName().' - '.$_SERVER['HTTP_HOST'].'/'.$page->getAlias().' | '.$page->getCreationDate()->format('d-m-Y h:m:s') : '';
                 },
                 'label' => false,
                 'attr' => [

@@ -23,7 +23,7 @@ class SitemapGenerator
      foreach ($pages as $page) {
          $sitemap .= "
             <url>
-            <loc>{$_SERVER['HTTP_HOST']}/{$page->getSlug()}</loc>
+            <loc>{$_SERVER['HTTP_HOST']}/{$page->getAlias()}</loc>
             <lastmod>{$page->getCreationDate()->format('Y-m-d')}</lastmod>
             </url>
             ";
