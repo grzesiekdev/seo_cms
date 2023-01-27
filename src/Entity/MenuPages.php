@@ -30,8 +30,6 @@ class MenuPages
     #[ORM\Column]
     private ?int $page_id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $Slug = null;
 
     public function __construct()
     {
@@ -109,15 +107,4 @@ class MenuPages
         return $this;
     }
 
-    public function getSlug(): ?string
-    {
-        return $this->Slug;
-    }
-
-    public function setSlug(string $Slug): self
-    {
-        $this->Slug = $Slug;
-
-        return $this;
-    }
 }

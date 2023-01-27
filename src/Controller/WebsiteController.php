@@ -19,11 +19,11 @@ class WebsiteController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}/', name: 'page')]
-    public function page(string $slug, PageRepository $pageRepository): Response
+    #[Route('/{alias}/', name: 'page', requirements: ['alias' => '.+'])]
+    public function page(string $alias, PageRepository $pageRepository): Response
     {
-        $page = $pageRepository->findOneBy(['Slug' => $slug]);
-        if (!$page || null !== $page->getParentId()) {
+        $page = $pageRepository->findOneBy(['Alias' => $alias]);
+        if (!$page) {
             throw $this->createNotFoundException('This page doesn\'t exists!');
         }
 
@@ -32,18 +32,18 @@ class WebsiteController extends AbstractController
         ]);
     }
 
-    #[Route('/{parent_slug}/{slug}/', name: 'page_parent')]
-    public function pageParent(string $parent_slug, string $slug, PageRepository $pageRepository): Response
-    {
-        $page = $pageRepository->findOneBy(['Slug' => $slug]);
-        $parent = $pageRepository->findOneBy(['Slug' => $parent_slug]);
-        if (!$parent || !$page) {
-            throw $this->createNotFoundException('This page doesn\'t exists!');
-        }
-
-        return $this->render('page.html.twig', [
-            'page' => $page,
-            'parent' => $parent,
-        ]);
-    }
+//    #[Route('/{parent_slug}/{slug}/', name: 'page_parent')]
+//    public function pageParent(string $parent_slug, string $slug, PageRepository $pageRepository): Response
+//    {
+//        $page = $pageRepository->findOneBy(['Slug' => $slug]);
+//        $parent = $pageRepository->findOneBy(['Slug' => $parent_slug]);
+//        if (!$parent || !$page) {
+//            throw $this->createNotFoundException('This page doesn\'t exists!');
+//        }
+//
+//        return $this->render('page.html.twig', [
+//            'page' => $page,
+//            'parent' => $parent,
+//        ]);
+//    }
 }

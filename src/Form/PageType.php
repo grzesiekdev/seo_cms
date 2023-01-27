@@ -74,7 +74,7 @@ class PageType extends AbstractType
                 'choice_label' => function (?int $id) use ($options) {
                     $page = $this->pageRepository->findOneBy(['id' => $id]);
                     if ($page !== $options['data']) {
-                        return $page ? $page->getName().' - '.$_SERVER['HTTP_HOST'].'/'.$page->getSlug() : '';
+                        return $page ? $page->getName().' - '.$_SERVER['HTTP_HOST'].'/'.$page->getAlias() : '';
                     }
                 },
                 'multiple' => false,

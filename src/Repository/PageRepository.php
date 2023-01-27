@@ -38,22 +38,35 @@ class PageRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    // LEGACY: currently no use
+    /**
+     * @return Page[] Returns an array of Page objects
+     */
+    public function findAllPagesWithParents(): array
+    {
+        $pages = $this->findAll();
+        $parents_ids = [];
+        foreach ($pages as $page) {
+            $parents_ids[] = $page->getParentId();
+        }
+        return $this->mapSlugs($pages, $parents_ids);
+    }
 
-//    /**
-//     * @return Page[] Returns an array of Page objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
+    public function mapSlugs($pages, $parent_ids): array
+    {
+        $slugs = [];
+        foreach ($pages as $page) {
+            if (in_array($page->getParentId(), $parent_ids) && null !== $page->getParentId()) {
+                $parent = $this->findOneBy(['id' => $page->getParentId()]);
+                if (null !== $parent) {
+                    $slugs[] = $parent->getSlug().'/'.$page->getSlug();
+                }
+            } else {
+                $slugs[] = $page->getSlug();
+            }
+        }
+        return $slugs;
+    }
 //    public function findOneBySomeField($value): ?Page
 //    {
 //        return $this->createQueryBuilder('p')

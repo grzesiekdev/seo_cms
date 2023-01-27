@@ -30,25 +30,20 @@ class Slugify
 
     public function getSlug(\Symfony\Component\Form\FormInterface $form, &$page): void
     {
-        $parent_slug = '';
         if (empty($form['slug']->getData()) || !empty($form['parent_id'])) {
+            $prev_slug = $page?->getSlug();
             $slug = $this->slugify($form['name']->getData());
-            if (!empty($form['parent_id'] && null != $form['parent_id']->getData())) {
+            if (!empty($form['parent_id'] && null !== $form['parent_id']->getData())) {
                 $parent = $this->pageRepository->findOneBy(['id' => $form->get('parent_id')->getData()]);
                 $parent_slug = $parent->getSlug();
+                $whole_address = $parent_slug.'/'.$slug;
+                $page->setAlias($whole_address);
+            } else {
+                $page->setAlias($slug);
             }
-            if ($this->pageRepository->findBy(['Slug' => $slug])) {
+            // check if there wasn't previous slug, AND current slug is not the same as previous, THEN check if slug is unique
+            if ((null !== $prev_slug && '' !== $prev_slug && $slug != $prev_slug) && $this->pageRepository->findBy(['Slug' => $slug])) {
                 $slug .= '-'.uniqid();
-            }
-            $menu = $this->menuPagesRepository->findOneBy(['page_id' => $page->getId()]);
-            if ($menu) {
-                if ('' != $parent_slug) {
-                    $whole_address = $parent_slug.'/'.$slug;
-                    $menu->setSlug($whole_address);
-                } else {
-                    $menu->setSlug($slug);
-                }
-                $this->menuPagesRepository->save($menu, true);
             }
             $page->setSlug($slug);
         }

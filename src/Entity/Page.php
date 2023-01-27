@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PageRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -47,6 +48,9 @@ class Page
 
     #[ORM\Column(nullable: true)]
     private ?int $parent_id = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Alias = null;
 
     public function getId(): ?int
     {
@@ -184,4 +188,17 @@ class Page
 
         return $this;
     }
+
+    public function getAlias(): ?string
+    {
+        return $this->Alias;
+    }
+
+    public function setAlias(string $Alias): self
+    {
+        $this->Alias = $Alias;
+
+        return $this;
+    }
+
 }
