@@ -53,14 +53,15 @@
 
 /.idea/
 
-.env
+
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/
 /public/img/
 /public/robots.txt
 /public/sitemap.xml
-
+.env.local.php
+/config/secrets
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
