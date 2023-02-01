@@ -52,4 +52,4 @@ jobs:
         node-version: '18'
         #registry-url: npm.fontawesome.com
     - run: npm install --force
-    - run: npm run build
+    - run: npm run watch
