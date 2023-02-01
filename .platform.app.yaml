@@ -24,7 +24,7 @@ disk: 512
 web:
     locations:
         "/":
-            root: "public"
+            root: "app"
             expires: 1h
             passthru: "/index.php"
 

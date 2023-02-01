@@ -45,7 +45,7 @@ class PanelController extends AbstractController
         $robotsForm->handleRequest($request);
 
         if ($robotsForm->isSubmitted() && $robotsForm->isValid()) {
-            $robotsFile = fopen('../public/robots.txt', 'w+') or exit('Unable to open file!');
+            $robotsFile = fopen('../app/robots.txt', 'w+') or exit('Unable to open file!');
             $robots = $robotsForm->getData();
             fwrite($robotsFile, $robots['content']);
             fclose($robotsFile);

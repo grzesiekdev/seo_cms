@@ -56,8 +56,8 @@
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
-/public/robots.txt
-/public/sitemap.xml
+/app/robots.txt
+/app/sitemap.xml
 .env.local.php
 /config/secrets
 npm-debug.log
