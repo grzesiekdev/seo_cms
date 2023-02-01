@@ -21,6 +21,6 @@
     "webpack-notifier": "^1.15.0"
   },
   "scripts": {
-    "watch": "webpack --watch --progress"
+    "watch": "webpack"
   }
 }
