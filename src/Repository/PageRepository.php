@@ -67,7 +67,7 @@ class PageRepository extends ServiceEntityRepository
         }
         return $slugs;
     }
-//    app function findOneBySomeField($value): ?Page
+//    public function findOneBySomeField($value): ?Page
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')

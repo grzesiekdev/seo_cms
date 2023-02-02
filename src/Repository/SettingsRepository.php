@@ -42,7 +42,7 @@ class SettingsRepository extends ServiceEntityRepository
 //    /**
 //     * @return Settings[] Returns an array of Settings objects
 //     */
-//    app function findByExampleField($value): array
+//    public function findByExampleField($value): array
 //    {
 //        return $this->createQueryBuilder('s')
 //            ->andWhere('s.exampleField = :val')
@@ -54,7 +54,7 @@ class SettingsRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    app function findOneBySomeField($value): ?Settings
+//    public function findOneBySomeField($value): ?Settings
 //    {
 //        return $this->createQueryBuilder('s')
 //            ->andWhere('s.exampleField = :val')

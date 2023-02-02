@@ -32,7 +32,7 @@ class SitemapGenerator
         </urlset>
         ';
 
-     $sitemapFile = fopen('../app/sitemap.xml', 'w+') or exit('Unable to open file!');
+     $sitemapFile = fopen('../public/sitemap.xml', 'w+') or exit('Unable to open file!');
      fwrite($sitemapFile, $sitemap);
      fclose($sitemapFile);
  }
