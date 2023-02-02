@@ -56,6 +56,7 @@
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
+/public/bundles/
 /public/build/
 /public/robots.txt
 /public/sitemap.xml
