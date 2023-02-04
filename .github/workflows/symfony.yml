@@ -46,18 +46,6 @@ jobs:
     steps:
       - name: Get latest code
         uses: actions/checkout@v3
-      - name: Install Composer dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      - name: npm install
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
-      - run: npm install --force
-      - run: npm run watch
-#      - name: Adding Vendor
-#        run: echo "vendor/:composer.lock" > .git-ftp-include
-      - name: Adding node
-        run: echo "node_modules/:package.json" > .git-ftp-include
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
