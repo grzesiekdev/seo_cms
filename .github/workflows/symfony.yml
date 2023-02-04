@@ -47,7 +47,7 @@ jobs:
       - name: Get latest code
         uses: actions/checkout@v3
       - name: Install Composer dependencies
-        run: composer install --prefer-dist --no-interaction --no-suggest
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Adding Vendor
         run: echo "vendor/:composer.lock" > .git-ftp-include
       - name: Sync files
