@@ -42,20 +42,14 @@ jobs:
       - run: npm install --force
       - run: npm run watch
   deploy:
-    needs: [build]
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v2
-      - name: Generate deployment package
-        run: zip -r deploy.zip . -x '*.git*'
-      - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v20
+      - name: Get latest code
+        uses: actions/checkout@v3
+      - name: Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: seo_cms
-          environment_name: Seocms-env
-          version_label: 6
-          region: "eu-central-1"
-          deployment_package: deploy.zip
+          server: bednarski.xyz
+          username: gbednarski@bednarski.xyz
+          password: ${{ secrets.FTP_PASSWORD }}
