@@ -10,43 +10,46 @@ permissions:
   contents: read
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
-        with:
-          php-version: '8.1'
-      - uses: actions/checkout@v3
-      - name: Copy .env.test.local
-        run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
-      - name: Cache Composer packages
-        id: composer-cache
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
-      - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      - name: Run Migration && Load Fixtures
-        run: |
-          composer dump-autoload
-          composer require --dev symfony/orm-pack
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      - name: npm install
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
-      - run: npm install --force
-      - run: npm run watch
+#  build:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
+#        with:
+#          php-version: '8.1'
+#      - uses: actions/checkout@v3
+#      - name: Copy .env.test.local
+#        run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
+#      - name: Cache Composer packages
+#        id: composer-cache
+#        uses: actions/cache@v3
+#        with:
+#          path: vendor
+#          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+#          restore-keys: |
+#            ${{ runner.os }}-php-
+#      - name: Install Dependencies
+#        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+#      - name: Run Migration && Load Fixtures
+#        run: |
+#          composer dump-autoload
+#          composer require --dev symfony/orm-pack
+#        env:
+#          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+#      - name: npm install
+#        uses: actions/setup-node@v2
+#        with:
+#          node-version: '18'
+#      - run: npm install --force
+#      - run: npm run watch
   deploy:
-    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - name: Get latest code
         uses: actions/checkout@v3
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-interaction --no-suggest
+      - name: Adding Vendor
+        run: echo "vendor/:composer.lock" > .git-ftp-include
       - name: Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
