@@ -59,3 +59,4 @@ jobs:
           user: gbednarski@bednarski.xyz
           password: ${{ secrets.FTP_PASSWORD }}
           remoteFiles: "/var/cache/prod/*"
+          remoteDirectories: "/var/cache/prod"
