@@ -42,7 +42,7 @@ class MenuPagesRepository extends ServiceEntityRepository
 //    /**
 //     * @return MenuPages[] Returns an array of MenuPages objects
 //     */
-//    public function findByExampleField($value): array
+//    public_html function findByExampleField($value): array
 //    {
 //        return $this->createQueryBuilder('m')
 //            ->andWhere('m.exampleField = :val')
@@ -54,7 +54,7 @@ class MenuPagesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?MenuPages
+//    public_html function findOneBySomeField($value): ?MenuPages
 //    {
 //        return $this->createQueryBuilder('m')
 //            ->andWhere('m.exampleField = :val')

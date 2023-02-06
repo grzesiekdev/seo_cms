@@ -30,7 +30,7 @@ class ThemeController extends AbstractController
         $logo_setting = $this->settingsRepository->findOneBy(['setting_name' => 'logo_path']);
 
         if ($form->isSubmitted() && $form->isSubmitted()) {
-            $directory = '../public/img/logo/';
+            $directory = '../public_html/img/logo/';
             $file = $form['logo']->getData();
             if ('' != $file) {
                 if (null !== $logo_setting) {

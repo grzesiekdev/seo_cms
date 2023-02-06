@@ -18,7 +18,7 @@ class RobotsType extends AbstractType
                     'cols' => 50,
                     'class' => 'mt-3',
                 ],
-                'data' => file_get_contents('../public/robots.txt'),
+                'data' => file_get_contents('../public_html/robots.txt'),
                 'label' => false,
             ])
         ;

@@ -56,10 +56,10 @@
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
-/public/bundles/
-/public/build/
-/public/robots.txt
-/public/sitemap.xml
+/public_html/bundles/
+/public_html/build/
+/public_html/robots.txt
+/public_html/sitemap.xml
 .env.local.php
 /config/secrets
 npm-debug.log
