@@ -13,11 +13,11 @@
 <div class="row mt-3">
     {{ form_label(form.slug) }}
     <small class="text-muted">If this page has parent, then you can't really edit the first part of the URL here</small>
-    <div class="row">
+    <div class="d-flex">
         {% if parent_slug %}
-            <div class="col-1" style="width:5%; margin-top:3px;">{{ parent_slug }}/</div>
+            <div style="margin-top:3px; margin-right:5px;">{{ parent_slug }}/</div>
         {% endif %}
-        <div class="col-10">{{ form_widget(form.slug) }}</div>
+        <div>{{ form_widget(form.slug) }}</div>
     </div>
 </div>
 <div class="row mt-3">
