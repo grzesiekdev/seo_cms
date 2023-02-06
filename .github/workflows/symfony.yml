@@ -52,5 +52,4 @@ jobs:
           server: bednarski.xyz
           username: gbednarski@bednarski.xyz
           password: ${{ secrets.FTP_PASSWORD }}
-      - name: Clear cache
       - run: symfony console cache:pool:clear cache.global_clearer
