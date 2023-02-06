@@ -53,7 +53,7 @@ jobs:
           username: gbednarski@bednarski.xyz
           password: ${{ secrets.FTP_PASSWORD }}
       - name: Clear cache
-        uses: StephanThierry/ftp-delete-action@/v2.1
+        uses: StephanThierry/ftp-delete-action@v2.1
         with:
           host: bednarski.xyz
           user: gbednarski@bednarski.xyz
