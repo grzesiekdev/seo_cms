@@ -59,4 +59,4 @@ jobs:
           user: gbednarski@bednarski.xyz
           password: ${{ secrets.FTP_PASSWORD }}
           remoteFiles: "var/cache/prod/*.*"
-          options: lftp -e 'rm -f -r /var/cache/prod/'
+          options: "--rf var/cache/prod/"
