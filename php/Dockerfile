@@ -15,12 +15,5 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN curl -sS https://get.symfony.com/cli/installer | bash
 RUN mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 
-#RUN symfony console doctrine:migrations:migrate
-#RUN symfony console doctrine:fixtures:load
 RUN git config --global user.email "grzesiekb@onet.pl" \
     && git config --global user.name "grzesiekdev"
-#COPY /bin/console ./
-#COPY docker-entrypoint.sh /docker-entrypoint.sh
-#RUN chmod +x /docker-entrypoint.sh
-#RUN #. /docker-entrypoint.sh
-#ENTRYPOINT ["/docker-entrypoint.sh"]
