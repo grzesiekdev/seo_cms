@@ -58,4 +58,5 @@ jobs:
           host: bednarski.xyz
           user: gbednarski@bednarski.xyz
           password: ${{ secrets.FTP_PASSWORD }}
-          remoteFiles: "/var/cache/prod/*.*" 
+          remoteFiles: "/var/cache/prod/*.*"
+      - run: pwd
