@@ -60,4 +60,4 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           remoteFiles: "var/cache/prod/*.*"
           options:
-            lftp -e rm -rf "/var/cache/prod/"
+            lftp -c "rm -rf /var/cache/prod/"
