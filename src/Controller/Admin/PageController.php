@@ -43,7 +43,12 @@ class PageController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $page = $form->getData();
-            $slugify->getSlug($form, $page);
+            $form_data = [
+                'slug' => $form['slug']->getData(),
+                'parent_id' => $form['parent_id']->getData(),
+                'name' => $form['name']->getData()
+            ];
+            $slugify->getSlug($form_data, $page);
             $current_date = date('d-m-Y h:i:s');
             $date = new \DateTime($current_date);
             $page->setCreationDate($date);
@@ -87,7 +92,12 @@ class PageController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $page = $form->getData();
-            $slugify->getSlug($form, $page);
+            $form_data = [
+                'slug' => $form['slug']->getData(),
+                'parent_id' => $form['parent_id']->getData(),
+                'name' => $form['name']->getData()
+            ];
+            $slugify->getSlug($form_data, $page);
 
             $page->setWasEdited(true);
             $this->check_if_home($form, $page);
