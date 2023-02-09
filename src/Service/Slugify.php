@@ -36,24 +36,33 @@ class Slugify
         return $text;
     }
 
+    public function checkIfUnique($prev_slug, $slug) : string {
+        // check if there wasn't previous slug, AND current slug is not the same as previous, THEN check if slug is unique
+        if ((null !== $prev_slug && '' !== $prev_slug && $slug != $prev_slug) && $this->pageRepository->findBy(['Slug' => $slug])) {
+            $slug .= '-'.uniqid();
+        }
+        return $slug;
+    }
+
     public function getSlug(array $form_data, &$page): void
     {
-        if (empty($form_data['slug']) || !empty($form_data['parent_id'])) {
-            $prev_slug = $page?->getSlug();
+        $prev_slug = $page?->getSlug();
+        if (null === $form_data['slug']) {
             $slug = $this->slugify($form_data['name']);
-            if (!empty($form_data['parent_id'] && null !== $form_data['parent_id'])) {
-                $parent = $this->pageRepository->findOneBy(['id' => $form_data['parent_id']]);
-                $parent_slug = $parent->getSlug();
-                $whole_address = $parent_slug.'/'.$slug;
-                $page->setAlias($whole_address);
-            } else {
-                $page->setAlias($slug);
-            }
-            // check if there wasn't previous slug, AND current slug is not the same as previous, THEN check if slug is unique
-            if ((null !== $prev_slug && '' !== $prev_slug && $slug != $prev_slug) && $this->pageRepository->findBy(['Slug' => $slug])) {
-                $slug .= '-'.uniqid();
-            }
-            $page->setSlug($slug);
+        } else {
+            $slug = $form_data['slug'];
         }
+
+        if (null !== $form_data['parent_id']) {
+            $parent = $this->pageRepository->findOneBy(['id' => $form_data['parent_id']]);
+            $parent_slug = $parent->getSlug();
+            $whole_address = $parent_slug.'/'.$slug;
+            $page->setAlias($whole_address);
+        } else {
+            $page->setAlias($slug);
+        }
+
+        $this->checkIfUnique($prev_slug, $slug);
+        $page->setSlug($slug);
     }
 }

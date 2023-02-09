@@ -50,6 +50,18 @@ class SlugifyTest extends KernelTestCase
         $this->assertEquals('1-number-and-24-others-19-98-aczs', $slugified);
     }
 
+    public function testGetSlugForPassedAllFields() : void {
+        $page = $this->entityManager->getRepository(Page::class)->findOneBy(['id' => 1]);
+        $form_data = [
+            'slug' => 'example-page-name',
+            'parent_id' => null,
+            'name' => 'Example page name'
+        ];
+        $this->slugify->getSlug($form_data, $page);
+
+        $this->assertEquals('example-page-name', $page->getSlug());
+    }
+
     protected function tearDown(): void
     {
         parent::tearDown();
