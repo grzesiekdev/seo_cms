@@ -50,8 +50,8 @@ class SlugifyTest extends KernelTestCase
         $this->assertEquals('1-number-and-24-others-19-98-aczs', $slugified);
     }
 
-    public function testGetSlugForPassedAllFields() : void {
-        $page = $this->entityManager->getRepository(Page::class)->findOneBy(['id' => 1]);
+    public function testGetSlugForPassedSlug() : void {
+        $page = $this->entityManager->getRepository(Page::class)->findOneBy(['id' => 4]);
         $form_data = [
             'slug' => 'example-page-name',
             'parent_id' => null,
@@ -60,6 +60,18 @@ class SlugifyTest extends KernelTestCase
         $this->slugify->getSlug($form_data, $page);
 
         $this->assertEquals('example-page-name', $page->getSlug());
+    }
+
+    public function testGetSlugForDuplicatedSlug() : void {
+        $page = $this->entityManager->getRepository(Page::class)->findOneBy(['id' => 4]);
+        $form_data = [
+            'slug' => 'example-page',
+            'parent_id' => null,
+            'name' => 'Example page name'
+        ];
+        $this->slugify->getSlug($form_data, $page);
+
+        $this->assertMatchesRegularExpression('/example-page-[a-z0-9]{13}/', $page->getSlug());
     }
 
     protected function tearDown(): void

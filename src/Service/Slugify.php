@@ -62,7 +62,7 @@ class Slugify
             $page->setAlias($slug);
         }
 
-        $this->checkIfUnique($prev_slug, $slug);
+        $slug = $this->checkIfUnique($prev_slug, $slug);
         $page->setSlug($slug);
     }
 }
