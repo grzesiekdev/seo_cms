@@ -58,7 +58,6 @@ class SlugifyTest extends KernelTestCase
             'name' => 'Example page name'
         ];
         $this->slugify->getSlug($form_data, $page);
-
         $this->assertEquals('example-page-name', $page->getSlug());
     }
 
@@ -70,8 +69,73 @@ class SlugifyTest extends KernelTestCase
             'name' => 'Example page name'
         ];
         $this->slugify->getSlug($form_data, $page);
-
         $this->assertMatchesRegularExpression('/example-page-[a-z0-9]{13}/', $page->getSlug());
+    }
+
+    public function testGetSlugForSlugifyFromName() : void {
+        $page = $this->entityManager->getRepository(Page::class)->findOneBy(['id' => 4]);
+        $form_data = [
+            'slug' => null,
+            'parent_id' => null,
+            'name' => 'Example page name'
+        ];
+
+        $this->slugify->getSlug($form_data, $page);
+        $this->assertEquals('example-page-name', $page->getSlug());
+    }
+
+    public function testGetSlugForAlias() : void {
+        $page = $this->entityManager->getRepository(Page::class)->findOneBy(['id' => 4]);
+        $form_data = [
+            'slug' => null,
+            'parent_id' => null,
+            'name' => 'Example page name'
+        ];
+
+        $this->slugify->getSlug($form_data, $page);
+        $this->assertEquals('example-page-name', $page->getAlias());
+    }
+
+    public function testGetSlugForAliasWithParent() : void {
+        $page = $this->entityManager->getRepository(Page::class)->findOneBy(['id' => 5]);
+        $form_data = [
+            'slug' => null,
+            'parent_id' => 4,
+            'name' => 'Example page name'
+        ];
+
+        $this->slugify->getSlug($form_data, $page);
+        $this->assertEquals('home/example-page-name', $page->getAlias());
+    }
+
+    public function testCheckIfUniqueForNullPrevSlug() : void {
+        $slug = $this->slugify->checkIfunique(null, 'example-page-name');
+        $this->assertEquals('example-page-name', $slug);
+    }
+
+    public function testCheckIfUniqueForEmptyPrevSlug() : void {
+        $slug = $this->slugify->checkIfunique(' ', 'example-page-name');
+        $this->assertEquals('example-page-name', $slug);
+    }
+
+    public function testCheckIfUniqueForIdentityCheck() : void {
+        $slug = $this->slugify->checkIfunique('example-page-name', 'example-page-name');
+        $this->assertEquals('example-page-name', $slug);
+    }
+
+    public function testCheckIfUniqueIfOldSameAsNew() : void {
+        $slug = $this->slugify->checkIfunique('example-page-new', 'example-page-new');
+        $this->assertEquals('example-page-new', $slug);
+    }
+
+    public function testCheckIfUniqueIfNotDuplicate() : void {
+        $slug = $this->slugify->checkIfunique('example-page', 'example-page-new');
+        $this->assertEquals('example-page-new', $slug);
+    }
+
+    public function testCheckIfUniqueForDuplicate() : void {
+        $slug = $this->slugify->checkIfunique('example-page-old', 'example-page');
+        $this->assertMatchesRegularExpression('/example-page-[a-z0-9]{13}/', $slug);
     }
 
     protected function tearDown(): void

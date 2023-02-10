@@ -37,7 +37,7 @@ class Slugify
     }
 
     public function checkIfUnique($prev_slug, $slug) : string {
-        // check if there wasn't previous slug, AND current slug is not the same as previous, THEN check if slug is unique
+        // check if there wasn't previous slug, AND current slug is not the same as previous, THEN check if slug is not unique
         if ((null !== $prev_slug && '' !== $prev_slug && $slug != $prev_slug) && $this->pageRepository->findBy(['Slug' => $slug])) {
             $slug .= '-'.uniqid();
         }

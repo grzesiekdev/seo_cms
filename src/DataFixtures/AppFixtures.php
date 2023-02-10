@@ -27,6 +27,17 @@ class AppFixtures extends Fixture
         $page->setRobotsSettings('index, follow');
         $page->setAlias('home');
 
+        $page2 = new Page();
+        $page2->setTitle('Example page');
+        $page2->setName("Example page");
+        $page2->setDescription("Example page Description");
+        $page2->setContent("Example page content");
+        $page2->setCreationDate(new \DateTime());
+        $page2->setSlug('example-page');
+        $page2->setIsHome(0);
+        $page2->setRobotsSettings('index, follow');
+        $page2->setAlias('example-page');
+
         $settings = new Settings();
         $settings->setSettingName('logo_path');
         $settings->setSettingValue('63d8f4690a75a.png');
@@ -42,6 +53,7 @@ class AppFixtures extends Fixture
         $admin->setRoles(['ROLE_ADMIN']);
 
         $manager->persist($page);
+        $manager->persist($page2);
         $manager->persist($settings);
         $manager->persist($admin);
         $manager->flush();

@@ -20,9 +20,9 @@ when@test:
     doctrine:
         dbal:
             # "TEST_TOKEN" is typically set by ParaTest
-            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
-            password: '%env(DATABASE_PASSWORD)'
-            database_url: '%env(DATABASE_URL)'
+#            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+#            password: '%env(DATABASE_PASSWORD)'
+#            database_url: '%env(DATABASE_URL)'
 
 when@prod:
     doctrine:
