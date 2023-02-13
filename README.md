@@ -54,6 +54,7 @@ symfony console doctrine:fixtures:load
 
 ## TODO
 - [x] Add Breadcrumbs
+- [ ] Change page theme - with admin panel + RWD
 - [ ] Improve creating sitemap - add lastmod
 - [ ] Add sidebars
 - [ ] Add nesting to more than just two levels
